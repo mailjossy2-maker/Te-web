@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SwiftRoute international courier and shipping services. Get a shipping estimate, track parcels, and ship worldwide with confidence." />
+  <title>SwiftRoute | International Courier & Shipping</title>
+  <style>
+    :root {
+      --navy: #0b1f3a;
+      --navy-2: #102b4e;
+      --blue: #246bfd;
+      --blue-dark: #1556dc;
+      --mint: #b8f3df;
+      --ink: #17243a;
+      --muted: #68778c;
+      --line: #e5eaf1;
+      --surface: #f5f8fc;
+      --white: #fff;
+      --shadow: 0 18px 50px rgba(17, 41, 76, 0.11);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--white);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    .container { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+
+    .topbar { background: var(--navy); color: #dbe6f5; font-size: 12px; }
+    .topbar-inner { min-height: 38px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+    .topbar-note { display: flex; align-items: center; gap: 9px; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #48dfa7; box-shadow: 0 0 0 4px rgba(72, 223, 167, .14); }
+    .topbar-links { display: flex; gap: 22px; color: #becbe0; }
+
+    header { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.94); border-bottom: 1px solid rgba(229,234,241,.8); backdrop-filter: blur(14px); }
+    .nav { height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+    .brand { display: inline-flex; align-items: center; gap: 11px; font-weight: 850; letter-spacing: -.7px; font-size: 20px; color: var(--navy); white-space: nowrap; }
+    .brand-mark { width: 37px; height: 37px; border-radius: 12px; display: grid; place-items: center; background: var(--blue); color: white; box-shadow: 0 8px 18px rgba(36,107,253,.25); }
+    .brand-mark svg { width: 22px; height: 22px; }
+    .brand span span { color: var(--blue); }
+    .nav-links { display: flex; align-items: center; gap: 30px; color: #46556a; font-size: 13px; font-weight: 650; }
+    .nav-links a:hover, .topbar-links a:hover { color: var(--blue); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 10px; padding: 12px 18px; font-weight: 750; font-size: 13px; cursor: pointer; transition: .2s ease; }
+    .btn-primary { color: white; background: var(--blue); box-shadow: 0 8px 18px rgba(36,107,253,.2); }
+    .btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+    .btn-outline { border: 1px solid var(--line); color: var(--navy); background: white; }
+    .btn-outline:hover { border-color: #b8c8df; background: #f8faff; }
+    .menu-toggle { display: none; border: 0; background: transparent; color: var(--navy); font-size: 25px; cursor: pointer; }
+
+    .hero { position: relative; overflow: hidden; padding: 78px 0 74px; background: linear-gradient(115deg, #f5f9ff 0%, #eef5ff 55%, #e9f2ff 100%); }
+    .hero::before, .hero::after { content: ""; position: absolute; border: 1px solid rgba(36,107,253,.1); border-radius: 50%; pointer-events: none; }
+    .hero::before { width: 600px; height: 600px; right: -200px; top: -200px; }
+    .hero::after { width: 430px; height: 430px; right: -115px; top: -115px; }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.02fr .98fr; align-items: center; gap: 48px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--blue); font-size: 11px; font-weight: 850; letter-spacing: 1.1px; text-transform: uppercase; }
+    .eyebrow::before { content: ""; width: 20px; height: 2px; background: var(--blue); }
+    h1 { margin: 18px 0 18px; max-width: 650px; color: var(--navy); font-size: clamp(42px, 5.4vw, 66px); line-height: 1.02; letter-spacing: -3.2px; }
+    h1 em { color: var(--blue); font-style: normal; }
+    .hero-copy { max-width: 510px; margin: 0; color: #607087; font-size: 16px; line-height: 1.75; }
+    .hero-buttons { display: flex; gap: 12px; margin-top: 27px; flex-wrap: wrap; }
+    .hero-buttons .btn { padding: 14px 20px; }
+    .proof { display: flex; align-items: center; gap: 13px; margin-top: 31px; color: #56667c; font-size: 12px; }
+    .avatars { display: flex; padding-left: 4px; }
+    .avatar { display: grid; place-items: center; width: 29px; height: 29px; margin-left: -5px; border: 2px solid #f3f7fc; border-radius: 50%; color: white; font-size: 10px; font-weight: 800; background: #7699d5; }
+    .avatar:nth-child(2) { background: #d88970; }.avatar:nth-child(3) { background: #5aaf91; }.avatar:nth-child(4) { background: #8476bd; }
+    .stars { color: #f1a728; letter-spacing: 1px; font-size: 13px; }
+    .proof strong { color: var(--navy); }
+
+    .visual-wrap { position: relative; min-height: 410px; display: grid; place-items: center; }
+    .globe { position: absolute; width: min(100%, 460px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 36% 30%, #d7e8ff 0, #bad5fc 38%, #9bbdf2 68%, #719ee0 100%); box-shadow: inset -26px -32px 55px rgba(48,92,160,.17), 0 30px 75px rgba(55,104,182,.18); overflow: hidden; }
+    .globe::before { content: ""; position: absolute; inset: 0; opacity: .65; background-image: radial-gradient(ellipse at 27% 37%, #e9f3ff 0 8%, transparent 8.4%), radial-gradient(ellipse at 58% 28%, #e9f3ff 0 7%, transparent 7.5%), radial-gradient(ellipse at 70% 55%, #e9f3ff 0 11%, transparent 11.5%), radial-gradient(ellipse at 40% 72%, #e9f3ff 0 9%, transparent 9.5%), linear-gradient(90deg, transparent 49.7%, rgba(255,255,255,.35) 50%, transparent 50.3%), linear-gradient(0deg, transparent 49.7%, rgba(255,255,255,.35) 50%, transparent 50.3%); }
+    .globe::after { content: ""; position: absolute; inset: 9% 20%; border: 1px solid rgba(255,255,255,.45); border-radius: 50%; box-shadow: 0 0 0 30px rgba(255,255,255,.12), 0 0 0 62px rgba(255,255,255,.1); }
+    .route { position: absolute; width: 76%; height: 43%; top: 21%; left: 12%; border-top: 2px dashed rgba(255,255,255,.9); border-radius: 50%; transform: rotate(-17deg); }
+    .pin { position: absolute; z-index: 2; width: 38px; height: 38px; display: grid; place-items: center; border: 5px solid rgba(255,255,255,.85); border-radius: 50%; color: white; background: var(--blue); box-shadow: 0 7px 16px rgba(30,79,157,.25); font-size: 13px; }
+    .pin-one { top: 28%; left: 25%; }.pin-two { top: 22%; right: 25%; background: #10a978; }
+    .parcel { position: absolute; z-index: 3; right: 1%; bottom: 9%; width: 155px; height: 129px; display: grid; place-items: center; font-size: 80px; filter: drop-shadow(0 22px 17px rgba(55,75,110,.2)); transform: rotate(-8deg); }
+    .float-card { position: absolute; z-index: 4; display: flex; align-items: center; gap: 11px; padding: 13px 15px; border: 1px solid rgba(232,238,247,.9); border-radius: 14px; background: rgba(255,255,255,.95); box-shadow: 0 14px 35px rgba(35,70,120,.13); }
+    .float-card.top { top: 11%; left: -3%; }.float-card.bottom { bottom: 9%; left: -4%; }
+    .float-icon { width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; background: #eaf1ff; color: var(--blue); font-size: 17px; }
+    .float-card strong { display: block; color: var(--navy); font-size: 12px; }.float-card small { display: block; color: var(--muted); font-size: 10px; }
+
+    .metrics { border-bottom: 1px solid var(--line); background: white; }
+    .metrics-row { display: grid; grid-template-columns: repeat(4, 1fr); padding: 27px 0; }
+    .metric { padding: 4px 23px; border-right: 1px solid var(--line); text-align: center; }
+    .metric:last-child { border: 0; }
+    .metric strong { display: block; color: var(--navy); font-size: 24px; letter-spacing: -.7px; }
+    .metric span { color: var(--muted); font-size: 11px; }
+
+    section { scroll-margin-top: 90px; }
+    .section { padding: 82px 0; }
+    .section-head { max-width: 610px; margin: 0 auto 39px; text-align: center; }
+    .section-head .eyebrow { justify-content: center; }
+    h2 { margin: 12px 0; color: var(--navy); font-size: clamp(30px, 4vw, 42px); line-height: 1.12; letter-spacing: -1.6px; }
+    .section-head p { margin: 0; color: var(--muted); font-size: 14px; }
+    .services { background: var(--surface); }
+    .service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .service-card { padding: 26px; border: 1px solid #e9eef5; border-radius: var(--radius); background: white; transition: .2s ease; }
+    .service-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .service-icon { width: 48px; height: 48px; display: grid; place-items: center; border-radius: 14px; background: #edf3ff; color: var(--blue); font-size: 22px; }
+    .service-card h3 { margin: 18px 0 7px; color: var(--navy); font-size: 17px; }
+    .service-card p { min-height: 44px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
+    .text-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 18px; color: var(--blue); font-size: 12px; font-weight: 800; }
+
+    .tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: stretch; }
+    .tool-card { padding: 29px; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 10px 30px rgba(14,39,75,.04); }
+    .tool-title { display: flex; align-items: flex-start; gap: 13px; margin-bottom: 21px; }
+    .tool-title .service-icon { flex: 0 0 48px; }
+    .tool-title h3 { margin: 1px 0 3px; color: var(--navy); font-size: 19px; }.tool-title p { margin: 0; color: var(--muted); font-size: 12px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field { margin-bottom: 13px; }
+    label { display: block; margin: 0 0 6px; color: #52627a; font-size: 11px; font-weight: 750; }
+    input, select { width: 100%; height: 45px; padding: 0 12px; outline: none; border: 1px solid #dfe6ef; border-radius: 9px; color: var(--ink); background: white; font-size: 12px; }
+    input:focus, select:focus { border-color: #79a5ff; box-shadow: 0 0 0 3px rgba(36,107,253,.1); }
+    .tool-card .btn { width: 100%; min-height: 45px; margin-top: 3px; }
+    .form-result { display: none; margin-top: 13px; padding: 13px; border: 1px solid #cceee0; border-radius: 10px; color: #13734f; background: #effbf6; font-size: 12px; }
+    .form-result.show { display: block; }
+    .result-price { display: flex; align-items: center; justify-content: space-between; margin-top: 6px; color: var(--navy); font-weight: 800; font-size: 16px; }
+    .result-price small { color: var(--muted); font-size: 10px; font-weight: 500; }
+    .result-note { color: var(--muted); font-size: 10px; }
+
+    .how { background: var(--navy); color: white; overflow: hidden; }
+    .how .section-head h2 { color: white; }.how .section-head p { color: #b7c6dc; }.how .eyebrow { color: #91b4ff; }.how .eyebrow::before { background: #91b4ff; }
+    .steps { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .steps::before { content: ""; position: absolute; top: 23px; left: 11%; right: 11%; border-top: 1px dashed rgba(255,255,255,.25); }
+    .step { position: relative; text-align: center; }
+    .step-number { position: relative; z-index: 1; width: 47px; height: 47px; display: grid; place-items: center; margin: 0 auto 17px; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; color: white; background: #173b67; font-weight: 800; }
+    .step h3 { margin: 0 0 7px; font-size: 14px; }.step p { max-width: 205px; margin: 0 auto; color: #b4c3d8; font-size: 11px; line-height: 1.7; }
+
+    .cta { padding: 65px 0; }
+    .cta-box { display: flex; align-items: center; justify-content: space-between; gap: 25px; padding: 36px 42px; border-radius: 21px; color: white; background: linear-gradient(110deg, #246bfd, #1454d3); box-shadow: 0 20px 40px rgba(36,107,253,.18); }
+    .cta-box h2 { max-width: 550px; margin: 0 0 8px; color: white; font-size: 30px; }.cta-box p { margin: 0; color: #d9e5ff; font-size: 13px; }
+    .btn-white { flex: 0 0 auto; padding: 14px 20px; color: var(--blue); background: white; }
+    .btn-white:hover { background: #edf3ff; }
+
+    footer { padding: 54px 0 20px; color: #c1cde0; background: #08182d; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 36px; padding-bottom: 37px; }
+    footer .brand { color: white; }footer .brand-mark { background: #246bfd; }
+    .footer-about p { max-width: 290px; margin: 16px 0; color: #9eacc1; font-size: 12px; line-height: 1.8; }
+    .socials { display: flex; gap: 8px; }.socials a { width: 29px; height: 29px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.15); border-radius: 8px; color: white; font-size: 11px; }
+    .footer-col h4 { margin: 4px 0 15px; color: white; font-size: 12px; }.footer-col a { display: block; margin: 10px 0; color: #9eacc1; font-size: 11px; }.footer-col a:hover { color: white; }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 15px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.1); color: #8c9bb0; font-size: 10px; }
+    .footer-bottom span:last-child { display: flex; gap: 17px; }
+    .toast { position: fixed; right: 20px; bottom: 20px; z-index: 20; max-width: 330px; padding: 14px 17px; border-radius: 12px; color: white; background: var(--navy); box-shadow: var(--shadow); font-size: 13px; opacity: 0; transform: translateY(10px); pointer-events: none; transition: .25s ease; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 900px) {
+      .nav-links { gap: 17px; }.hero-grid { gap: 18px; }.visual-wrap { min-height: 350px; }.globe { width: 370px; }.float-card.top { left: 0; }.float-card.bottom { left: 0; }.parcel { right: -2%; }
+    }
+    @media (max-width: 720px) {
+      .container { width: min(100% - 32px, 540px); }
+      .topbar-links { display: none; }.topbar-inner { justify-content: center; }
+      .nav { height: 66px; }.menu-toggle { display: block; }.nav-actions { margin-left: auto; }.nav-actions .btn { display: none; }
+      .nav-links { position: absolute; top: 66px; left: 0; right: 0; display: none; align-items: stretch; flex-direction: column; gap: 0; padding: 7px 20px 16px; border-bottom: 1px solid var(--line); background: white; box-shadow: 0 14px 20px rgba(12,30,56,.08); }
+      .nav-links.open { display: flex; }.nav-links a { padding: 12px 0; border-bottom: 1px solid #f0f2f6; }
+      .hero { padding: 54px 0 45px; }.hero-grid { grid-template-columns: 1fr; gap: 22px; }.hero-copy { font-size: 14px; }h1 { font-size: 48px; letter-spacing: -2.5px; }.visual-wrap { min-height: 335px; }.globe { width: 325px; }.parcel { width: 110px; height: 95px; font-size: 64px; }.float-card { transform: scale(.9); }.float-card.top { top: 5%; left: -5%; }.float-card.bottom { bottom: 3%; left: -5%; }
+      .metrics-row { grid-template-columns: 1fr 1fr; row-gap: 18px; }.metric:nth-child(2) { border-right: 0; }.metric { padding: 0 10px; }.metric strong { font-size: 21px; }
+      .section { padding: 61px 0; }.service-grid { grid-template-columns: 1fr; gap: 12px; }.service-card { padding: 22px; }.service-card p { min-height: 0; }
+      .tools-grid { grid-template-columns: 1fr; }.tool-card { padding: 22px; }.steps { grid-template-columns: 1fr 1fr; row-gap: 28px; }.steps::before { display: none; }
+      .cta { padding: 48px 0; }.cta-box { align-items: flex-start; flex-direction: column; padding: 28px; }.cta-box h2 { font-size: 26px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 26px 18px; }.footer-about { grid-column: 1 / -1; }.footer-bottom { flex-direction: column; }
+    }
+    @media (max-width: 390px) { h1 { font-size: 42px; }.form-row { grid-template-columns: 1fr; gap: 0; }.globe { width: 290px; }.visual-wrap { min-height: 305px; }.float-card { padding: 10px; }.footer-grid { grid-template-columns: 1fr 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <div class="topbar-note"><span class="status-dot"></span> Delivering to 220+ destinations worldwide</div>
+      <div class="topbar-links"><a href="#help">Help center</a><a href="#contact">Contact</a><a href="#">EN ▾</a></div>
+    </div>
+  </div>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="SwiftRoute home">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M3 12.5 20.5 4l-6.4 16-3.1-6.1L3 12.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m11 13.9 4.5-4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+        <span>Swift<span>Route</span></span>
+      </a>
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="#services">Services</a><a href="#shipping-tools">Shipping tools</a><a href="#how-it-works">How it works</a><a href="#help">Help center</a>
+      </nav>
+      <div class="nav-actions"><a class="btn btn-primary" href="#shipping-tools">Ship a package <span>→</span></a><button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">Your world, within reach</span>
+          <h1>Shipping without <em>boundaries.</em></h1>
+          <p class="hero-copy">From important documents to your next big delivery, send it across the world with a courier that keeps things moving—and keeps you in the loop.</p>
+          <div class="hero-buttons"><a class="btn btn-primary" href="#shipping-tools">Get a shipping quote <span>→</span></a><a class="btn btn-outline" href="#shipping-tools">Track a package <span>⌖</span></a></div>
+          <div class="proof"><div class="avatars" aria-hidden="true"><span class="avatar">J</span><span class="avatar">M</span><span class="avatar">A</span><span class="avatar">K</span></div><div><span class="stars">★★★★★</span><br /><strong>Trusted by 40,000+</strong> happy shippers</div></div>
+        </div>
+        <div class="visual-wrap" aria-label="Illustration of a parcel traveling around the globe">
+          <div class="globe"><div class="route"></div></div>
+          <span class="pin pin-one" aria-hidden="true">✦</span><span class="pin pin-two" aria-hidden="true">✓</span>
+          <div class="parcel" aria-hidden="true">📦</div>
+          <div class="float-card top"><span class="float-icon">✈</span><span><strong>Global express</strong><small>On its way to London</small></span></div>
+          <div class="float-card bottom"><span class="float-icon">✓</span><span><strong>Delivered with care</strong><small>On time, every time</small></span></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="metrics" aria-label="SwiftRoute service statistics">
+      <div class="container metrics-row">
+        <div class="metric"><strong>220+</strong><span>countries & territories</span></div>
+        <div class="metric"><strong>98.6%</strong><span>on-time delivery rate</span></div>
+        <div class="metric"><strong>24/7</strong><span>shipment visibility</span></div>
+        <div class="metric"><strong>40k+</strong><span>happy customers</span></div>
+      </div>
+    </div>
+
+    <section class="section services" id="services">
+      <div class="container">
+        <div class="section-head"><span class="eyebrow">Shipping made simple</span><h2>The right delivery for every journey</h2><p>Flexible international shipping options, built around your schedule and your budget.</p></div>
+        <div class="service-grid">
+          <article class="service-card"><div class="service-icon">✈</div><h3>International Express</h3><p>When every hour counts. Priority air delivery with clear timelines and real-time updates.</p><a class="text-link" href="#shipping-tools">Explore express <span>→</span></a></article>
+          <article class="service-card"><div class="service-icon">🌐</div><h3>Economy Worldwide</h3><p>Reliable global shipping at a better price. A smart choice for less time-sensitive parcels.</p><a class="text-link" href="#shipping-tools">Explore economy <span>→</span></a></article>
+          <article class="service-card"><div class="service-icon">▤</div><h3>Business & Freight</h3><p>Scalable shipping support for growing teams, bulk orders, and heavier consignments.</p><a class="text-link" href="#contact">Talk to our team <span>→</span></a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="shipping-tools">
+      <div class="container">
+        <div class="section-head"><span class="eyebrow">Everything in one place</span><h2>Ready when you are</h2><p>Check a shipment or get an instant sample estimate. No guesswork, just a clear next step.</p></div>
+        <div class="tools-grid">
+          <form class="tool-card" id="trackingForm">
+            <div class="tool-title"><div class="service-icon">⌖</div><div><h3>Track your shipment</h3><p>See where your parcel is right now.</p></div></div>
+            <div class="field"><label for="trackingNumber">Tracking number</label><input id="trackingNumber" name="trackingNumber" placeholder="e.g. SR-2048-6510" required /></div>
+            <button class="btn btn-primary" type="submit">Track package <span>→</span></button>
+            <div class="form-result" id="trackingResult" role="status"></div>
+          </form>
+          <form class="tool-card" id="quoteForm">
+            <div class="tool-title"><div class="service-icon">⇄</div><div><h3>Estimate your shipping</h3><p>A quick sample estimate for your route.</p></div></div>
+            <div class="form-row">
+              <div class="field"><label for="fromCountry">Ship from</label><select id="fromCountry" required><option value="US">United States</option><option value="GB">United Kingdom</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="DE">Germany</option><option value="JP">Japan</option></select></div>
+              <div class="field"><label for="toCountry">Ship to</label><select id="toCountry" required><option value="GB">United Kingdom</option><option value="US">United States</option><option value="CA">Canada</option><option value="AU">Australia</option><option value="DE">Germany</option><option value="JP">Japan</option><option value="FR">France</option><option value="SG">Singapore</option></select></div>
+            </div>
+            <div class="form-row">
+              <div class="field"><label for="weight">Parcel weight</label><input id="weight" type="number" min="0.1" max="70" step="0.1" value="2" required /></div>
+              <div class="field"><label for="speed">Service</label><select id="speed"><option value="express">Express (2–4 days)</option><option value="economy">Economy (5–9 days)</option></select></div>
+            </div>
+            <button class="btn btn-primary" type="submit">Calculate estimate <span>→</span></button>
+            <div class="form-result" id="quoteResult" role="status"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="section how" id="how-it-works">
+      <div class="container">
+        <div class="section-head"><span class="eyebrow">A smoother way to send</span><h2>Four steps. One less thing to worry about.</h2><p>From booking to delivery, our process is designed to stay simple.</p></div>
+        <div class="steps">
+          <div class="step"><div class="step-number">01</div><h3>Get your quote</h3><p>Choose your route and service to see a clear estimate.</p></div>
+          <div class="step"><div class="step-number">02</div><h3>Book your shipment</h3><p>Prepare your details and select a pickup or drop-off.</p></div>
+          <div class="step"><div class="step-number">03</div><h3>Follow every mile</h3><p>Track your parcel with timely status updates.</p></div>
+          <div class="step"><div class="step-number">04</div><h3>Delivered</h3><p>Your shipment arrives safely, with confirmation.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="container"><div class="cta-box"><div><h2>Let's get your next shipment moving.</h2><p>Need a hand with a delivery? Our shipping specialists are here to help.</p></div><a class="btn btn-white" href="/cdn-cgi/l/email-protection#b8d0ddd4d4d7f8cbcfd1decccad7cdccdd96ddc0d9d5c8d4dd">Talk to our team <span>→</span></a></div></div>
+    </section>
+  </main>
+
+  <footer id="help">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about"><a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">➤</span><span>Swift<span>Route</span></span></a><p>Making international shipping feel a little closer. Reliable courier services for people and businesses moving around the world.</p><div class="socials"><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="Instagram">ig</a><a href="#" aria-label="Facebook">f</a></div></div>
+        <div class="footer-col"><h4>Our services</h4><a href="#services">International express</a><a href="#services">Economy worldwide</a><a href="#services">Business shipping</a><a href="#services">Freight solutions</a></div>
+        <div class="footer-col"><h4>Quick links</h4><a href="#shipping-tools">Track a shipment</a><a href="#shipping-tools">Get a quote</a><a href="#how-it-works">How it works</a><a href="#help">FAQs</a></div>
+        <div class="footer-col"><h4>Get in touch</h4><a href="/cdn-cgi/l/email-protection#5c34393030331c2f2b353a282e332928397239243d312c3039"><span class="__cf_email__" data-cfemail="1e767b7272715e6d6977786a6c716b6a7b307b667f736e727b">[email&#160;protected]</span></a><a href="tel:+18005550199">+1 (800) 555-0199</a><a href="#contact">Mon–Fri, 8am–6pm</a></div>
+      </div>
+      <div class="footer-bottom"><span>© <span id="year"></span> SwiftRoute Logistics. All rights reserved.</span><span><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></span></div>
+    </div>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const menuToggle = document.querySelector("#menuToggle");
+    const navLinks = document.querySelector("#navLinks");
+    const toast = document.querySelector("#toast");
+    let toastTimer;
+
+    document.querySelector("#year").textContent = new Date().getFullYear();
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.textContent = isOpen ? "×" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.textContent = "☰";
+      });
+    });
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 3500);
+    }
+
+    document.querySelector("#trackingForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const trackingNumber = document.querySelector("#trackingNumber").value.trim();
+      const result = document.querySelector("#trackingResult");
+      result.innerHTML = `<strong>${escapeHtml(trackingNumber)}</strong><br />Demo tracking is ready to connect to your shipment API. No live carrier data is connected yet.`;
+      result.classList.add("show");
+    });
+
+    document.querySelector("#quoteForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const from = document.querySelector("#fromCountry");
+      const to = document.querySelector("#toCountry");
+      const weight = Number(document.querySelector("#weight").value);
+      const speed = document.querySelector("#speed").value;
+      const result = document.querySelector("#quoteResult");
+      if (!Number.isFinite(weight) || weight <= 0) {
+        showToast("Enter a valid parcel weight to calculate an estimate.");
+        return;
+      }
+      if (from.value === to.value) {
+        showToast("Choose two different countries for an international shipment.");
+        return;
+      }
+      const base = speed === "express" ? 24 : 15;
+      const estimate = (base + weight * (speed === "express" ? 5.8 : 3.4)).toFixed(2);
+      const delivery = speed === "express" ? "2–4 business days" : "5–9 business days";
+      result.innerHTML = `<strong>Sample estimate</strong><div class="result-price"><span>$${estimate} USD</span><small>${delivery}</small></div><div class="result-note">${from.options[from.selectedIndex].text} → ${to.options[to.selectedIndex].text} · ${weight.toFixed(1)} kg. Final pricing may vary by dimensions, duties, and exact address.</div>`;
+      result.classList.add("show");
+    });
+
+    function escapeHtml(value) {
+      const node = document.createElement("span");
+      node.textContent = value;
+      return node.innerHTML;
+    }
+
+    document.querySelectorAll('a[href="#"]').forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        showToast("This demo link can be connected to your chosen page or social profile.");
+      });
+    });
+  </script>
+</body>
+</html>
